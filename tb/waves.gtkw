@@ -1,0 +1,128 @@
+[*]
+[*] GTKWave Analyzer v3.3.90 (w)1999-2018 BSI
+[*] Thu Apr 22 06:26:36 2021
+[*]
+[dumpfile] "/home/tom/projects/vexriscv_ocd/verilog_example/tb/waves.vcd"
+[dumpfile_mtime] "Thu Apr 22 06:26:34 2021"
+[dumpfile_size] 825112
+[savefile] "/home/tom/projects/vexriscv_ocd/verilog_example/tb/waves.gtkw"
+[timestart] 20583100
+[size] 2541 1336
+[pos] -1 -1
+*-17.000000 21195800 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] tb.
+[treeopen] tb.u_top.
+[treeopen] tb.u_top.u_vex.
+[treeopen] tb.u_top.u_vex.cpu.
+[sst_width] 484
+[signals_width] 443
+[sst_expanded] 1
+[sst_vpaned_height] 865
+@28
+tb.u_top.u_vex.clk
+@200
+-
+@28
+tb.u_top.led0
+tb.u_top.led1
+tb.u_top.led2
+tb.u_top.u_vex.cpu.DebugPlugin_allowEBreak
+tb.u_top.u_vex.cpu.DebugPlugin_haltedByBreak
+@200
+-
+@800200
+-iBus
+@28
+tb.u_top.u_vex.io_iBus_cmd_valid
+@22
+tb.u_top.u_vex.io_iBus_cmd_payload_pc[31:0]
+@8022
+tb.u_top.u_vex.io_iBus_cmd_payload_pc[31:0]
+@200
+-
+@28
+tb.u_top.u_vex.io_iBus_rsp_valid
+@22
+tb.u_top.u_vex.io_iBus_rsp_payload_inst[31:0]
+@1000200
+-iBus
+@200
+-
+@800200
+-dBus
+@28
+tb.u_top.u_vex.cpu.dBus_cmd_valid
+@22
+tb.u_top.u_vex.cpu.dBus_cmd_payload_address[31:0]
+@28
+tb.u_top.u_vex.cpu.dBus_cmd_payload_wr
+@22
+tb.u_top.u_vex.cpu.dBus_cmd_payload_data[31:0]
+@28
+tb.u_top.u_vex.cpu.dBus_cmd_payload_size[1:0]
+@200
+-
+@28
+tb.u_top.u_vex.cpu.dBus_rsp_ready
+@22
+tb.u_top.u_vex.cpu.dBus_rsp_data[31:0]
+@1000200
+-dBus
+@28
+tb.u_top.u_vex.cpu.decode_IS_EBREAK
+tb.u_top.u_vex.cpu.decode_DO_EBREAK
+tb.u_top.u_vex.cpu.execute_DO_EBREAK
+@200
+-
+-
+@28
+tb.u_top.u_vex.cpu.execute_arbitration_isValid
+tb.u_top.u_vex.cpu.execute_arbitration_isFiring
+tb.u_top.u_vex.cpu.execute_arbitration_haltItself
+tb.u_top.u_vex.cpu.DebugPlugin_haltIt
+tb.u_top.u_vex.cpu.DebugPlugin_haltedByBreak
+@200
+-
+@28
+tb.u_top.u_vex.cpu.DebugPlugin_allowEBreak
+@22
+tb.u_top.u_vex.cpu.DebugPlugin_busReadDataReg[31:0]
+@28
+tb.u_top.u_vex.cpu.DebugPlugin_firstCycle
+tb.u_top.u_vex.cpu.DebugPlugin_godmode
+tb.u_top.u_vex.cpu.DebugPlugin_haltIt
+tb.u_top.u_vex.cpu.DebugPlugin_haltedByBreak
+tb.u_top.u_vex.cpu.DebugPlugin_isPipBusy
+tb.u_top.u_vex.cpu.DebugPlugin_resetIt
+tb.u_top.u_vex.cpu.DebugPlugin_resetIt_regNext
+@29
+tb.u_top.u_vex.cpu.DebugPlugin_secondCycle
+@28
+tb.u_top.u_vex.cpu.DebugPlugin_stepIt
+@200
+-
+@28
+tb.u_top.u_vex.cpu.CsrPlugin_selfException_valid
+@22
+tb.u_top.u_vex.cpu.CsrPlugin_selfException_payload_code[3:0]
+@200
+-
+@28
+tb.u_top.u_vex.cpu.execute_arbitration_flushIt
+tb.u_top.u_vex.cpu.execute_arbitration_flushNext
+tb.u_top.u_vex.cpu.execute_arbitration_haltByOther
+tb.u_top.u_vex.cpu.execute_arbitration_haltItself
+tb.u_top.u_vex.cpu.execute_arbitration_isFiring
+tb.u_top.u_vex.cpu.execute_arbitration_isFlushed
+tb.u_top.u_vex.cpu.execute_arbitration_isMoving
+tb.u_top.u_vex.cpu.execute_arbitration_isStuck
+tb.u_top.u_vex.cpu.execute_arbitration_isStuckByOthers
+tb.u_top.u_vex.cpu.execute_arbitration_isValid
+tb.u_top.u_vex.cpu.execute_arbitration_removeIt
+@200
+-
+@22
+tb.u_top.u_vex.cpu.CsrPlugin_mtval[31:0]
+tb.u_top.u_vex.cpu.CsrPlugin_mepc[31:0]
+[pattern_trace] 1
+[pattern_trace] 0
