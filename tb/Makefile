@@ -1,6 +1,6 @@
 
 
-VERILOG_FILES 	= tb.v ../rtl/top.v ../spinal/ ../spinal/VexRiscvWithDebug.v
+VERILOG_FILES 	= tb.v ../rtl/top.v ../spinal/VexRiscvWithDebug.v
 SW_FILES 		= ../sw/progmem0.hex
 
 all: ./tb $(SW_FILES)

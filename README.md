@@ -53,3 +53,31 @@ the speed at which LEDs toggle.
 The CPU is generated with external and timer interrupt support enabled, but the inputs
 are strapped to 0 in this minimal example.
 
+## Simulating the Design
+
+The project contains a testbench to flush out functional issue.  While not self-checking, it was very useful in tracking down 
+[a bug](https://github.com/SpinalHDL/VexRiscv/issues/176) in the VexRiscv DebugPlugin that has since been fixed.
+
+It uses the open source Icarus Verilog to simulate the design, and GTKWave to watch waveforms. 
+
+In the `./tb` directory, just type `make`:
+
+```sh
+iverilog -D SIMULATION=1 -o tb tb.v ../rtl/top.v ../spinal/VexRiscvWithDebug.v
+./tb
+VCD info: dumpfile waves.vcd opened for output.
+               48250: led0 changed to 0
+               65250: led0 changed to 1
+               65250: led1 changed to 0
+               82150: led1 changed to 1
+               82150: led2 changed to 0
+```
+
+`make waves` will bring up the GTKWave waveform viewer and load the `waves.vcd` file that was created during
+the simulation.
+
+![GTKWave screenshot](/assets/vexriscv_ocd/gtkwave.png)
+
+The JTAG inputs signals are strapped to a fixed value, since the goal of this testbench was not to check
+the debug functionality  but to check that CPU code was fine.  As you can see above, the leds are indeed 
+toggling in sequence.
