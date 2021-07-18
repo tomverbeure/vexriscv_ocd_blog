@@ -1,6 +1,6 @@
 // Generator : SpinalHDL v1.5.0    git head : 83a031922866b078c411ec5529e00f1b6e79f8e7
 // Component : VexRiscvWithDebug
-// Git hash  : f7ac7749874349c2c1c17747116761a9a03ebadb
+// Git hash  : ca07d7fea4dfd69857e91e134abaa4dab789d3dd
 
 
 `define BranchCtrlEnum_defaultEncoding_type [1:0]
@@ -1227,6 +1227,7 @@ module VexRiscv (
   reg        [3:0]    _zz_execute_DBusSimplePlugin_formalMask;
   wire       [3:0]    execute_DBusSimplePlugin_formalMask;
   wire                when_DBusSimplePlugin_l479;
+  wire                when_DBusSimplePlugin_l486;
   wire                when_DBusSimplePlugin_l512;
   reg        [31:0]   writeBack_DBusSimplePlugin_rspShifted;
   wire       [1:0]    switch_Misc_l199_2;
@@ -3437,6 +3438,9 @@ module VexRiscv (
   assign when_DBusSimplePlugin_l479 = (((memory_arbitration_isValid && memory_MEMORY_ENABLE) && (! memory_MEMORY_STORE)) && ((! dBus_rsp_ready) || 1'b0));
   always @(*) begin
     DBusSimplePlugin_memoryExceptionPort_valid = 1'b0;
+    if(when_DBusSimplePlugin_l486) begin
+      DBusSimplePlugin_memoryExceptionPort_valid = 1'b1;
+    end
     if(memory_ALIGNEMENT_FAULT) begin
       DBusSimplePlugin_memoryExceptionPort_valid = 1'b1;
     end
@@ -3447,12 +3451,16 @@ module VexRiscv (
 
   always @(*) begin
     DBusSimplePlugin_memoryExceptionPort_payload_code = 4'bxxxx;
+    if(when_DBusSimplePlugin_l486) begin
+      DBusSimplePlugin_memoryExceptionPort_payload_code = 4'b0101;
+    end
     if(memory_ALIGNEMENT_FAULT) begin
       DBusSimplePlugin_memoryExceptionPort_payload_code = {1'd0, _zz_VexRiscv_DBusSimplePlugin_memoryExceptionPort_payload_code};
     end
   end
 
   assign DBusSimplePlugin_memoryExceptionPort_payload_badAddr = memory_REGFILE_WRITE_DATA;
+  assign when_DBusSimplePlugin_l486 = ((dBus_rsp_ready && dBus_rsp_error) && (! memory_MEMORY_STORE));
   assign when_DBusSimplePlugin_l512 = (! ((memory_arbitration_isValid && memory_MEMORY_ENABLE) && (1'b1 || (! memory_arbitration_isStuckByOthers))));
   always @(*) begin
     writeBack_DBusSimplePlugin_rspShifted = writeBack_MEMORY_READ_DATA;

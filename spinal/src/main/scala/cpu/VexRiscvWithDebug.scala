@@ -38,7 +38,8 @@ case class VexRiscvWithDebug() extends Component
             new DBusSimplePlugin(
                 // Trap when a load or store access is misaligned.
                 catchAddressMisaligned  = true,     
-                catchAccessFault        = false
+                // Trap when a load or store access results in a bus error
+                catchAccessFault        = true
             ),
             new CsrPlugin(
                 CsrPluginConfig(
