@@ -4,18 +4,10 @@ package cpu
 
 import spinal.core._
 import spinal.lib._
+import spinal.lib.com.jtag.Jtag
 
 import vexriscv.plugin._
 import vexriscv.{plugin, VexRiscv, VexRiscvConfig}
-
-import spinal.core._
-import spinal.lib._
-import spinal.lib.bus.simple._
-import spinal.lib.com.jtag.Jtag
-
-import scala.collection.mutable.ArrayBuffer
-import vexriscv.plugin.{NONE, _}
-import vexriscv.{VexRiscv, VexRiscvConfig, plugin}
 
 case class VexRiscvWithDebug() extends Component
 {
@@ -35,7 +27,7 @@ case class VexRiscvWithDebug() extends Component
     val config = VexRiscvConfig(
         plugins = List(
             new IBusSimplePlugin(
-                resetVector = 0x00000000l,
+                resetVector             = 0x00000000l,
                 cmdForkOnSecondStage    = false,
                 cmdForkPersistence      = false,
                 prediction              = STATIC,
@@ -87,7 +79,7 @@ case class VexRiscvWithDebug() extends Component
                 separatedAddSub         = false,
                 executeInsertion        = false
             ),
-            new LightShifterPlugin,
+            new FullBarrelShifterPlugin,
             new HazardSimplePlugin(
                 bypassExecute           = true,
                 bypassMemory            = true,
@@ -99,7 +91,7 @@ case class VexRiscvWithDebug() extends Component
             ),
             new BranchPlugin(
                 earlyBranch             = false,
-                catchAddressMisaligned  = false
+                catchAddressMisaligned  = true
             ),
             new DebugPlugin(ClockDomain.current),
             new YamlPlugin("VexRiscvWithDebug.yaml")
