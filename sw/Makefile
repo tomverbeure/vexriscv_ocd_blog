@@ -12,7 +12,7 @@ MARCH           = rv32ic
 CPU_FREQ_MHZ    = 50
 CC_OPT          = -Os
 
-OBJ_FILES       = start.o main.o lib.o
+OBJ_FILES       = start.o main.o lib.o trap.o
 
 OPENOCD_DIR     ?= /opt/openocd_vex
 
@@ -78,14 +78,14 @@ ocd_only:
 gdb_only:
 	$(TARGET)-gdb -q \
 		progmem.elf \
-		-ex "target remote localhost:3333"
+		-ex "target extended-remote localhost:3333"
 gdb: 
 	OPENOCD_DIR=$(OPENOCD_DIR) $(TARGET)-gdb -q \
 		progmem.elf \
 		-x ./gdb_ocd_open.cmd
 
 gdbgui:
-	$(GDBGUI) -g '$(TARGET)-gdb progmem.elf -ex "target remote localhost:3333"'
+	$(GDBGUI) -g '$(TARGET)-gdb -q progmem.elf -ex "target extended-remote localhost:3333"'
 
 clean:
 	\rm -fr *.o *.hex *.elf *.dis *.bin *.coe *.map *.mif *.mem *.funcs *.globs

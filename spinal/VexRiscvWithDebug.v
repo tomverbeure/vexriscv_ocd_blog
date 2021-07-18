@@ -1,6 +1,6 @@
 // Generator : SpinalHDL v1.5.0    git head : 83a031922866b078c411ec5529e00f1b6e79f8e7
 // Component : VexRiscvWithDebug
-// Git hash  : 8d8c55b06a225567b557b644b18ef0faacbb14fc
+// Git hash  : f7ac7749874349c2c1c17747116761a9a03ebadb
 
 
 `define BranchCtrlEnum_defaultEncoding_type [1:0]
@@ -667,6 +667,9 @@ module VexRiscv (
   wire       [2:0]    _zz_VexRiscv_IBusSimplePlugin_rspJoin_rspBuffer_discardCounter_2;
   wire       [0:0]    _zz_VexRiscv_IBusSimplePlugin_rspJoin_rspBuffer_discardCounter_3;
   wire       [2:0]    _zz_VexRiscv_DBusSimplePlugin_memoryExceptionPort_payload_code;
+  wire       [1:0]    _zz_VexRiscv__zz_CsrPlugin_exceptionPortCtrl_exceptionContext_code_1;
+  wire       [1:0]    _zz_VexRiscv__zz_CsrPlugin_exceptionPortCtrl_exceptionContext_code_1_1;
+  wire                _zz_VexRiscv_when;
   wire       [31:0]   _zz_VexRiscv__zz_decode_SHIFT_CTRL_2;
   wire       [31:0]   _zz_VexRiscv__zz_decode_SHIFT_CTRL_2_1;
   wire       [31:0]   _zz_VexRiscv__zz_decode_SHIFT_CTRL_2_2;
@@ -1005,6 +1008,9 @@ module VexRiscv (
   wire                IBusSimplePlugin_pcValids_1;
   wire                IBusSimplePlugin_pcValids_2;
   wire                IBusSimplePlugin_pcValids_3;
+  wire                IBusSimplePlugin_decodeExceptionPort_valid;
+  reg        [3:0]    IBusSimplePlugin_decodeExceptionPort_payload_code;
+  wire       [31:0]   IBusSimplePlugin_decodeExceptionPort_payload_badAddr;
   reg                 DBusSimplePlugin_memoryExceptionPort_valid;
   reg        [3:0]    DBusSimplePlugin_memoryExceptionPort_payload_code;
   wire       [31:0]   DBusSimplePlugin_memoryExceptionPort_payload_badAddr;
@@ -1211,8 +1217,9 @@ module VexRiscv (
   wire                IBusSimplePlugin_rspJoin_join_payload_rsp_error;
   wire       [31:0]   IBusSimplePlugin_rspJoin_join_payload_rsp_inst;
   wire                IBusSimplePlugin_rspJoin_join_payload_isRvc;
-  wire                IBusSimplePlugin_rspJoin_exceptionDetected;
+  reg                 IBusSimplePlugin_rspJoin_exceptionDetected;
   wire                _zz_IBusSimplePlugin_iBusRsp_output_valid;
+  wire                when_IBusSimplePlugin_l401;
   wire                _zz_dBus_cmd_valid;
   reg                 execute_DBusSimplePlugin_skipCmd;
   reg        [31:0]   _zz_dBus_cmd_payload_data;
@@ -1263,6 +1270,8 @@ module VexRiscv (
   reg        [31:0]   CsrPlugin_exceptionPortCtrl_exceptionContext_badAddr;
   wire       [1:0]    CsrPlugin_exceptionPortCtrl_exceptionTargetPrivilegeUncapped;
   wire       [1:0]    CsrPlugin_exceptionPortCtrl_exceptionTargetPrivilege;
+  wire       [1:0]    _zz_CsrPlugin_exceptionPortCtrl_exceptionContext_code;
+  wire                _zz_CsrPlugin_exceptionPortCtrl_exceptionContext_code_1;
   wire                when_CsrPlugin_l909;
   wire                when_CsrPlugin_l909_1;
   wire                when_CsrPlugin_l909_2;
@@ -1634,6 +1643,7 @@ module VexRiscv (
 
   reg [31:0] RegFilePlugin_regFile [0:31] /* verilator public */ ;
 
+  assign _zz_VexRiscv_when = ({decodeExceptionPort_valid,IBusSimplePlugin_decodeExceptionPort_valid} != 2'b00);
   assign _zz_VexRiscv_execute_SHIFT_RIGHT_1 = ($signed(_zz_VexRiscv_execute_SHIFT_RIGHT_2) >>> execute_FullBarrelShifterPlugin_amplitude);
   assign _zz_VexRiscv_execute_SHIFT_RIGHT = _zz_VexRiscv_execute_SHIFT_RIGHT_1[31 : 0];
   assign _zz_VexRiscv_execute_SHIFT_RIGHT_2 = {((execute_SHIFT_CTRL == `ShiftCtrlEnum_defaultEncoding_SRA) && execute_FullBarrelShifterPlugin_reversed[31]),execute_FullBarrelShifterPlugin_reversed};
@@ -1661,6 +1671,8 @@ module VexRiscv (
   assign _zz_VexRiscv_IBusSimplePlugin_rspJoin_rspBuffer_discardCounter_3 = IBusSimplePlugin_pending_dec;
   assign _zz_VexRiscv_IBusSimplePlugin_rspJoin_rspBuffer_discardCounter_2 = {2'd0, _zz_VexRiscv_IBusSimplePlugin_rspJoin_rspBuffer_discardCounter_3};
   assign _zz_VexRiscv_DBusSimplePlugin_memoryExceptionPort_payload_code = (memory_MEMORY_STORE ? 3'b110 : 3'b100);
+  assign _zz_VexRiscv__zz_CsrPlugin_exceptionPortCtrl_exceptionContext_code_1 = (_zz_CsrPlugin_exceptionPortCtrl_exceptionContext_code & (~ _zz_VexRiscv__zz_CsrPlugin_exceptionPortCtrl_exceptionContext_code_1_1));
+  assign _zz_VexRiscv__zz_CsrPlugin_exceptionPortCtrl_exceptionContext_code_1_1 = (_zz_CsrPlugin_exceptionPortCtrl_exceptionContext_code - 2'b01);
   assign _zz_VexRiscv__zz_execute_REGFILE_WRITE_DATA = execute_SRC_LESS;
   assign _zz_VexRiscv__zz_decode_SRC1_1 = (decode_IS_RVC ? 3'b010 : 3'b100);
   assign _zz_VexRiscv__zz_decode_SRC1_1_1 = decode_INSTRUCTION[19 : 15];
@@ -2697,7 +2709,7 @@ module VexRiscv (
 
   always @(*) begin
     decode_arbitration_removeIt = 1'b0;
-    if(decodeExceptionPort_valid) begin
+    if(_zz_VexRiscv_when) begin
       decode_arbitration_removeIt = 1'b1;
     end
     if(decode_arbitration_isFlushed) begin
@@ -2711,7 +2723,7 @@ module VexRiscv (
     if(IBusSimplePlugin_predictionJumpInterface_valid) begin
       decode_arbitration_flushNext = 1'b1;
     end
-    if(decodeExceptionPort_valid) begin
+    if(_zz_VexRiscv_when) begin
       decode_arbitration_flushNext = 1'b1;
     end
   end
@@ -3348,7 +3360,13 @@ module VexRiscv (
 
   assign IBusSimplePlugin_rspJoin_fetchRsp_rsp_inst = IBusSimplePlugin_rspJoin_rspBuffer_output_payload_inst;
   assign when_IBusSimplePlugin_l375 = (! IBusSimplePlugin_rspJoin_rspBuffer_output_valid);
-  assign IBusSimplePlugin_rspJoin_exceptionDetected = 1'b0;
+  always @(*) begin
+    IBusSimplePlugin_rspJoin_exceptionDetected = 1'b0;
+    if(when_IBusSimplePlugin_l401) begin
+      IBusSimplePlugin_rspJoin_exceptionDetected = 1'b1;
+    end
+  end
+
   assign IBusSimplePlugin_rspJoin_join_valid = (IBusSimplePlugin_iBusRsp_stages_1_output_valid && IBusSimplePlugin_rspJoin_rspBuffer_output_valid);
   assign IBusSimplePlugin_rspJoin_join_payload_pc = IBusSimplePlugin_rspJoin_fetchRsp_pc;
   assign IBusSimplePlugin_rspJoin_join_payload_rsp_error = IBusSimplePlugin_rspJoin_fetchRsp_rsp_error;
@@ -3363,6 +3381,16 @@ module VexRiscv (
   assign IBusSimplePlugin_iBusRsp_output_payload_rsp_error = IBusSimplePlugin_rspJoin_join_payload_rsp_error;
   assign IBusSimplePlugin_iBusRsp_output_payload_rsp_inst = IBusSimplePlugin_rspJoin_join_payload_rsp_inst;
   assign IBusSimplePlugin_iBusRsp_output_payload_isRvc = IBusSimplePlugin_rspJoin_join_payload_isRvc;
+  always @(*) begin
+    IBusSimplePlugin_decodeExceptionPort_payload_code = 4'bxxxx;
+    if(when_IBusSimplePlugin_l401) begin
+      IBusSimplePlugin_decodeExceptionPort_payload_code = 4'b0001;
+    end
+  end
+
+  assign IBusSimplePlugin_decodeExceptionPort_payload_badAddr = {IBusSimplePlugin_rspJoin_join_payload_pc[31 : 2],2'b00};
+  assign when_IBusSimplePlugin_l401 = (IBusSimplePlugin_rspJoin_join_valid && IBusSimplePlugin_rspJoin_join_payload_rsp_error);
+  assign IBusSimplePlugin_decodeExceptionPort_valid = (IBusSimplePlugin_rspJoin_exceptionDetected && IBusSimplePlugin_iBusRsp_readyForError);
   assign _zz_dBus_cmd_valid = 1'b0;
   always @(*) begin
     execute_DBusSimplePlugin_skipCmd = 1'b0;
@@ -3525,9 +3553,11 @@ module VexRiscv (
   assign _zz_when_CsrPlugin_l952_2 = (CsrPlugin_mip_MEIP && CsrPlugin_mie_MEIE);
   assign CsrPlugin_exceptionPortCtrl_exceptionTargetPrivilegeUncapped = 2'b11;
   assign CsrPlugin_exceptionPortCtrl_exceptionTargetPrivilege = ((CsrPlugin_privilege < CsrPlugin_exceptionPortCtrl_exceptionTargetPrivilegeUncapped) ? CsrPlugin_exceptionPortCtrl_exceptionTargetPrivilegeUncapped : CsrPlugin_privilege);
+  assign _zz_CsrPlugin_exceptionPortCtrl_exceptionContext_code = {decodeExceptionPort_valid,IBusSimplePlugin_decodeExceptionPort_valid};
+  assign _zz_CsrPlugin_exceptionPortCtrl_exceptionContext_code_1 = _zz_VexRiscv__zz_CsrPlugin_exceptionPortCtrl_exceptionContext_code_1[0];
   always @(*) begin
     CsrPlugin_exceptionPortCtrl_exceptionValids_decode = CsrPlugin_exceptionPortCtrl_exceptionValidsRegs_decode;
-    if(decodeExceptionPort_valid) begin
+    if(_zz_VexRiscv_when) begin
       CsrPlugin_exceptionPortCtrl_exceptionValids_decode = 1'b1;
     end
     if(decode_arbitration_isFlushed) begin
@@ -4805,9 +4835,9 @@ module VexRiscv (
     if(writeBack_arbitration_isFiring) begin
       CsrPlugin_minstret <= (CsrPlugin_minstret + 64'h0000000000000001);
     end
-    if(decodeExceptionPort_valid) begin
-      CsrPlugin_exceptionPortCtrl_exceptionContext_code <= decodeExceptionPort_payload_code;
-      CsrPlugin_exceptionPortCtrl_exceptionContext_badAddr <= decodeExceptionPort_payload_badAddr;
+    if(_zz_VexRiscv_when) begin
+      CsrPlugin_exceptionPortCtrl_exceptionContext_code <= (_zz_CsrPlugin_exceptionPortCtrl_exceptionContext_code_1 ? IBusSimplePlugin_decodeExceptionPort_payload_code : decodeExceptionPort_payload_code);
+      CsrPlugin_exceptionPortCtrl_exceptionContext_badAddr <= (_zz_CsrPlugin_exceptionPortCtrl_exceptionContext_code_1 ? IBusSimplePlugin_decodeExceptionPort_payload_badAddr : decodeExceptionPort_payload_badAddr);
     end
     if(CsrPlugin_selfException_valid) begin
       CsrPlugin_exceptionPortCtrl_exceptionContext_code <= CsrPlugin_selfException_payload_code;

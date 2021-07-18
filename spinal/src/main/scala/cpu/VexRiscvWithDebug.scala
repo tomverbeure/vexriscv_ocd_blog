@@ -31,8 +31,8 @@ case class VexRiscvWithDebug() extends Component
                 cmdForkOnSecondStage    = false,
                 cmdForkPersistence      = false,
                 prediction              = STATIC,
-                // Only useful when the IBus can issue an error.
-                catchAccessFault        = false,    
+                // Trap when an iBus access returns an error.
+                catchAccessFault        = true,    
                 compressedGen           = true
             ),
             new DBusSimplePlugin(

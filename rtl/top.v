@@ -21,7 +21,7 @@ module top(
     wire  [31:0]        iBus_cmd_payload_pc;
 
     reg                 iBus_rsp_valid;
-    wire                iBus_rsp_payload_error;
+    reg                 iBus_rsp_payload_error;
     reg   [31:0]        iBus_rsp_payload_inst;
 
     wire                dBus_cmd_valid;
@@ -102,7 +102,6 @@ module top(
     end
 
     assign iBus_cmd_ready           = 1'b1;
-    assign iBus_rsp_payload_error   = 1'b0;
 
     assign dBus_cmd_ready           = 1'b1;
     assign dBus_rsp_error           = 1'b0;
@@ -123,6 +122,8 @@ module top(
     end
 
     always @(posedge clk) begin 
+        iBus_rsp_payload_error        <= (iBus_cmd_payload_pc[31:mem_addr_bits] != 0);
+
         iBus_rsp_payload_inst[ 7: 0]  <= mem0[iBus_cmd_payload_pc[mem_addr_bits-1:2]];
         iBus_rsp_payload_inst[15: 8]  <= mem1[iBus_cmd_payload_pc[mem_addr_bits-1:2]];
         iBus_rsp_payload_inst[23:16]  <= mem2[iBus_cmd_payload_pc[mem_addr_bits-1:2]];
