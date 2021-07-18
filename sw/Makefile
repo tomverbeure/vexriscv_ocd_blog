@@ -34,7 +34,7 @@ READELF         = $(TARGET)-readelf
 
 GDBGUI          = gdbgui
 
-CREATE_MIF      = ../../misc/create_mif.rb
+CREATE_MIF      = ../misc/create_mif.rb
 
 .PHONY: all clean 
 
