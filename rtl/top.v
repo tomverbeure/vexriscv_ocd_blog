@@ -1,5 +1,6 @@
 `default_nettype none
 
+// Comment out the line below to disable JTAG functionality.
 `define JTAG_ENABLED
 
 module top(
