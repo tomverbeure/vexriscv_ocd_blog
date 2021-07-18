@@ -68,7 +68,9 @@ case class VexRiscvWithDebug() extends Component
                 )
             ),
             new DecoderSimplePlugin(
-                catchIllegalInstruction = false
+                // Trap when we execute an illegal instruction. For example, a MUL instruction when
+                // the CPU hasn't been configured with HW multiplier support.
+                catchIllegalInstruction = true
             ),
             new RegFilePlugin(
                 regFileReadyKind        = plugin.SYNC,
