@@ -70,15 +70,20 @@ main.o: top_defines.h
 
 main.c: top_defines.h
 
-ocd:
-	$(OPENOCD_DIR)/bin/openocd -f $(OPENOCD_DIR)/share/openocd/scripts/interface/ftdi/digilent_jtag_smt2.cfg \
+ocd_only:
+	$(OPENOCD_DIR)/bin/openocd -f interface/ftdi/digilent_jtag_smt2.cfg \
 		-c "adapter speed 1000; transport select jtag" \
 		-f "vexriscv_init.cfg"
 
-gdb:
+gdb_only:
 	$(TARGET)-gdb -q \
 		progmem.elf \
 		-ex "target remote localhost:3333"
+gdb: 
+	OPENOCD_DIR=$(OPENOCD_DIR) $(TARGET)-gdb -q \
+		progmem.elf \
+		-x ./gdb_ocd_open.cmd
+
 gdbgui:
 	$(GDBGUI) -g '$(TARGET)-gdb progmem.elf -ex "target remote localhost:3333"'
 
