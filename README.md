@@ -12,7 +12,7 @@ The example design contains a small VexRiscv CPU system.
 
 The VexRiscv can be configured into a thousand different ways. The exact details
 of the configuration parameters can be found in 
-[`VexRiscvWithDebug.scala`](blob/main/spinal/src/main/scala/cpu/VexRiscvWithDebug.scala).
+[`VexRiscvWithDebug.scala`](spinal/src/main/scala/cpu/VexRiscvWithDebug.scala).
 
 A short summary is:
 
