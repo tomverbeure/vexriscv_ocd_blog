@@ -28,8 +28,6 @@ int main()
     while(1){
         int wait_time = REG_RD_FIELD(STATUS, BUTTON) ? 100 : 200;
 
-            void (*func)(void) = (void (*)(void))0x00004000;
-            func();
 #if 0
         if (!REG_RD_FIELD(STATUS, BUTTON)){
             // Jump to an address that falls outside instruction RAM.
