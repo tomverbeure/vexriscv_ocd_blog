@@ -19,9 +19,8 @@ OPENOCD_DIR     ?= /opt/openocd_vex
 # Downloaded from https://github.com/sifive/freedom-tools/releases
 #TOOLS_PREFIX    = /opt/riscv64-unknown-elf-gcc-10.1.0-2020.08.2-x86_64-linux-ubuntu14/bin
 TOOLS_PREFIX    = /opt/riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14/bin
+#TOOLS_PREFIX    = /opt/riscv64-unknown-elf-gcc-10.1.0-2020.08.2-x86_64-apple-darwin/bin
 
-
-#TARGET          = $(TOOLS_PREFIX)/riscv32-unknown-elf
 TARGET          = $(TOOLS_PREFIX)/riscv64-unknown-elf
 
 AS              = $(TARGET)-as
