@@ -12,7 +12,9 @@ MARCH           = rv32ic
 CPU_FREQ_MHZ    = 50
 CC_OPT          = -Os
 
-OBJ_FILES       = start.o main.o lib.o semihosting.o
+OBJ_FILES       = start.o main.o lib.o
+
+OPENOCD_DIR     ?= /opt/openocd_vex
 
 # Downloaded from https://github.com/sifive/freedom-tools/releases
 #TOOLS_PREFIX    = /opt/riscv64-unknown-elf-gcc-10.1.0-2020.08.2-x86_64-linux-ubuntu14/bin
@@ -69,12 +71,13 @@ main.o: top_defines.h
 main.c: top_defines.h
 
 ocd:
-	/opt/openocd-vex/bin/openocd -f /opt/openocd-vex/share/openocd/scripts/interface/ftdi/digilent_jtag_smt2.cfg \
+	$(OPENOCD_DIR)/bin/openocd -f $(OPENOCD_DIR)/share/openocd/scripts/interface/ftdi/digilent_jtag_smt2.cfg \
 		-c "adapter speed 1000; transport select jtag" \
 		-f "vexriscv_init.cfg"
 
 gdb:
-	$(TARGET)-gdb progmem.elf \
+	$(TARGET)-gdb -q \
+		progmem.elf \
 		-ex "target remote localhost:3333"
 gdbgui:
 	$(GDBGUI) -g '$(TARGET)-gdb progmem.elf -ex "target remote localhost:3333"'

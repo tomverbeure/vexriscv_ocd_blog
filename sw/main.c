@@ -6,28 +6,34 @@
 #include "reg.h"
 #include "top_defines.h"
 #include "lib.h"
-#include "semihosting.h"
 
 int exception_addr;
 int exception_instr;
 int exception_cause;
 
+// This should not be called by anything unless something goes very bad...
 void trap()
 {
     int mepc    = csr_read(mepc);       // Address of trap
     int mtval   = csr_read(mtval);      // Instruction value of trap
     int mcause  = csr_read(mcause);     // Reason for the trap
 
+    // Grab trap exception status registers and store them in some global
+    // variables for each access by debugger...
     exception_addr  = mepc;
     exception_instr = mtval;
     exception_cause = mcause;
 
-    if (mcause == 0x00000003 && mtval == 0x00100073){
-        // Break instruction
-        csr_write(mepc, mepc+4);
-    }
+    // Insert an EBREAK instruction so that the CPU will halt, and a connected debugger
+    // will report the halt to the user.
+    asm volatile (
+        " ebreak \n"
+    );
 
-    return;
+    // Add endless loop so that we stay in the trap function when the VexRiscv has been
+    // compiled without EBREAK instruction support.
+    while(1)
+        ;
 }
 
 void wait_led_cycle(int ms)
@@ -42,16 +48,23 @@ void wait_led_cycle(int ms)
 }
 
 int global_cntr = 0;
+int mul_result = 0;
 
 int main() 
 {
-    char str[] = "Hello World!\n";
-
-    trace_write(str, 13);
+    global_cntr = 0;
 
     while(1){
-        int wait_time = REG_RD_FIELD(STATUS, BUTTON) ? 200 : 100;
-        trace_write(".", 1);
+        int wait_time = REG_RD_FIELD(STATUS, BUTTON) ? 100 : 200;
+
+#if 0
+        if (!REG_RD_FIELD(STATUS, BUTTON)){
+            // By default, the Makefile specifies "MARCH = rv32ic", but if we change that
+            // to "MARCH = rv32imc", then this code will result in a trap if we press the button.
+            mul_result = global_cntr * global_cntr;
+        }
+#endif
+
         REG_WR(LED_CONFIG, 0x01);
         wait_led_cycle(wait_time);
 
