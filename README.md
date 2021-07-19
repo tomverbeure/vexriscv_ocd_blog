@@ -76,7 +76,7 @@ VCD info: dumpfile waves.vcd opened for output.
 `make waves` will bring up the GTKWave waveform viewer and load the `waves.vcd` file that was created during
 the simulation.
 
-![GTKWave screenshot](/assets/vexriscv_ocd/gtkwave.png)
+![GTKWave screenshot](gtkwave.png)
 
 The JTAG inputs signals are strapped to a fixed value, since the goal of this testbench was not to check
 the debug functionality  but to check that CPU code was fine.  As you can see above, the leds are indeed 
