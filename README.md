@@ -1,7 +1,7 @@
 
 # VexRiscv and OpenOCD Example Repo
 
-This repo contains the example project that goes with my [VexRiscv and OpenOCD](https://tomverbeure.github.io/2021/03/06/VexRiscv-and-OpenOCD.html)
+This repo contains the example project that goes with my [VexRiscv and OpenOCD](https://tomverbeure.github.io/2021/07/18/VexRiscv-OpenOCD-and-Traps.html)
 blog post.
 
 The example design contains a small VexRiscv CPU system.
