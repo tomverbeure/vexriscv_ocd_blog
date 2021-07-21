@@ -8,28 +8,6 @@
 #include "lib.h"
 #include "semihosting.h"
 
-int exception_addr;
-int exception_instr;
-int exception_cause;
-
-void trap()
-{
-    int mepc    = csr_read(mepc);       // Address of trap
-    int mtval   = csr_read(mtval);      // Instruction value of trap
-    int mcause  = csr_read(mcause);     // Reason for the trap
-
-    exception_addr  = mepc;
-    exception_instr = mtval;
-    exception_cause = mcause;
-
-    if (mcause == 0x00000003 && mtval == 0x00100073){
-        // Break instruction
-        csr_write(mepc, mepc+4);
-    }
-
-    return;
-}
-
 void wait_led_cycle(int ms)
 {
     if (REG_RD_FIELD(STATUS, SIMULATION) == 1){

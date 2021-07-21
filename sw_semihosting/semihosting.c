@@ -40,9 +40,9 @@ static inline int __attribute__ ((always_inline)) call_host(int reason, void* ar
         // Workaround for RISC-V lack of multiple EBREAKs.
         " .option push \n"
         " .option norvc \n"
-        // 16bit alignment if code compression enabled fixed in openocd
-        // but reading three 32bit words is faster than reading six 16bit words
-        // so, force 32bit alignment here
+        // Force 16-byte alignment to make sure that the 3 instruction fall
+        // within the same virtual page. If you the instruction straddle a page boundary
+        // the debugger fetching the instructions could lead to a page fault.
         " .align 4 \n"
         " slli x0, x0, 0x1f \n"
         " ebreak \n"
