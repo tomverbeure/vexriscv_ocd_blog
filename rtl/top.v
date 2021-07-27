@@ -95,10 +95,20 @@ module top(
     reg [7:0] mem3[0:mem_size_bytes/4-1];
 
     initial begin
+        // Either `define SEMIHOSTING_SW in this file, or specify it in your
+        // synthesis tool. E.g. in Quartus you can define it under 
+        // Settings -> Compiler Settings -> Verilog HDL Input -> Verilog HDL macro
+`ifdef SEMIHOSTING_SW
+        $readmemh("../sw_semihosting/progmem0.hex", mem0);
+        $readmemh("../sw_semihosting/progmem1.hex", mem1);
+        $readmemh("../sw_semihosting/progmem2.hex", mem2);
+        $readmemh("../sw_semihosting/progmem3.hex", mem3);
+`else
         $readmemh("../sw/progmem0.hex", mem0);
         $readmemh("../sw/progmem1.hex", mem1);
         $readmemh("../sw/progmem2.hex", mem2);
         $readmemh("../sw/progmem3.hex", mem3);
+`endif
     end
 
     assign iBus_cmd_ready           = 1'b1;
