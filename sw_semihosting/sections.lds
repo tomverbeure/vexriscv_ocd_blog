@@ -1,7 +1,7 @@
 
 MEMORY
 {
-    ram (ax)  : ORIGIN = 0x00000000, LENGTH = 2K
+    ram (ax)  : ORIGIN = 0x00000000, LENGTH = 4K
 }
 
 SECTIONS 

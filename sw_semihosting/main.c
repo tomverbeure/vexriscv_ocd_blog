@@ -7,6 +7,7 @@
 #include "top_defines.h"
 #include "lib.h"
 #include "semihosting.h"
+#include "printf.h"
 
 void wait_led_cycle(int ms)
 {
@@ -23,13 +24,14 @@ int global_cntr = 0;
 
 int main() 
 {
-    char str[] = "Hello World!\n";
+//    char str[] = "Hello World!\n";
 
-    trace_write(str, 13);
+//    sh_write0(str);
+    printf("Hello World!\n");
 
     while(1){
         int wait_time = REG_RD_FIELD(STATUS, BUTTON) ? 200 : 100;
-        trace_write(".", 1);
+        sh_writec('.');
         REG_WR(LED_CONFIG, 0x01);
         wait_led_cycle(wait_time);
 

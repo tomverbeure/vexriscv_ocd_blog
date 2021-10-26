@@ -1,3 +1,4 @@
 progmem*.*
 *.o
 coefs.h
+openocd.log

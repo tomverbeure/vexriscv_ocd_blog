@@ -86,8 +86,8 @@ module top(
 
     // When changing this value, checkout ./sw/Makefile for a list of 
     // all other files that must be changed as well.
-    localparam mem_size_bytes   = 2048;
-    localparam mem_addr_bits    = 11;
+    localparam mem_size_bytes   = 4096;
+    localparam mem_addr_bits    = 12;
 
     reg [7:0] mem0[0:mem_size_bytes/4-1];
     reg [7:0] mem1[0:mem_size_bytes/4-1];

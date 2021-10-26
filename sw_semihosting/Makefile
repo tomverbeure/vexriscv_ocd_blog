@@ -5,14 +5,14 @@
 # ./sw/start.S
 # ./rtl/top.v
 
-MEM_WORDS       = 512
-MEM_BYTES       = 2048
+MEM_WORDS       = 1024
+MEM_BYTES       = 4096
 
 MARCH           = rv32ic
 CPU_FREQ_MHZ    = 50
 CC_OPT          = -Os
 
-OBJ_FILES       = start.o main.o lib.o trap.o semihosting.o
+OBJ_FILES       = start.o main.o lib.o trap.o semihosting.o printf.o
 
 OPENOCD_DIR     ?= /opt/openocd_vex
 
@@ -23,12 +23,15 @@ TOOLS_PREFIX    = /opt/riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-lin
 
 TARGET          = $(TOOLS_PREFIX)/riscv64-unknown-elf
 
+DEFINES         = -DCPU_FREQ=$(CPU_FREQ_MHZ)000000 
+DEFINES         += -DPRINTF_INCLUDE_CONFIG_H
+
 AS              = $(TARGET)-as
 ASFLAGS         = -march=$(MARCH) -mabi=ilp32
 LD              = $(TARGET)-gcc
 LDFLAGS         = -march=$(MARCH) -g -ggdb -mabi=ilp32 -Wl,-Tsections.lds,-Map,progmem.map -ffreestanding -nostartfiles -Wl,--no-relax -Wl,--start-group,--end-group
 CC              = $(TARGET)-gcc
-CFLAGS          = -march=$(MARCH) -g -ggdb -mno-div -mabi=ilp32 -ffunction-sections -fdata-sections -Wall -Wextra -pedantic -DCPU_FREQ=$(CPU_FREQ_MHZ)000000 $(CC_OPT)
+CFLAGS          = -march=$(MARCH) -g -ggdb -mno-div -mabi=ilp32 -ffunction-sections -fdata-sections -Wall -Wextra -pedantic $(DEFINES) $(CC_OPT)
 OBJCOPY         = $(TARGET)-objcopy
 OBJDUMP         = $(TARGET)-objdump
 READELF         = $(TARGET)-readelf
