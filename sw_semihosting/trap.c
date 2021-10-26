@@ -11,6 +11,9 @@ int exception_addr;
 int exception_instr;
 int exception_cause;
 
+#define EBREAK_OPCODE   0x001000073
+#define EBREAK_MCAUSE   0x000000003
+
 // This should not be called by anything unless something goes very bad...
 void trap()
 {
@@ -27,23 +30,25 @@ void trap()
         exception_instr = mtval;
         exception_cause = mcause;
 
-        if (mcause == 0x00000003 && mtval == 0x00100073){
+        if (mcause == EBREAK_MCAUSE && mtval == EBREAK_OPCODE){
             // This trap was triggered by an EBREAK instruction that
-            // was not the one right here below.
-            // There can be 2 reasons for this:
+            // was NOT the one futher below in this trap handler.
+
+            // There 2 common reasons for an EBREAK instruction:
+            // 
             // * the EBREAK was created by GDB to serve as a soft breakpoint.
-            //   In this case, the VexRiscv will halt, because it will always halt on EBREAK
-            //   as soon as openocd has connected to the DebugPlugin at least once.
-            //   When GDB is done dealing with the breakpoint, it will itself set the PC
-            //   to whichever value is needed, and continue. In this case, the instruction
-            //   below doesn't matter.
+            //   The CPU will halt, because it will always halt on EBREAK when openocd has been 
+            //   connected to the CPU. However, in such a case, this code should never have
+            //   been reached. 
+            //
             // * the EBREAK was part of the semihosting call. (See semihosting.c)
             //   When a debugger is connected, this will once again result in a CPU halt,
-            //   OpenOCD will service the semihosting call, and the OpenOCD will again
-            //   set the PC to whichever value is necessary. The instruction below will, again,
-            //   not be executed.
+            //   OpenOCD will service the semihosting call, and, just like for a soft breakpoing,
+            //   OpenOCD will set the PC to whichever value is necessary. 
+            //   The instruction below will, again, not be executed.
+            // 
             //   HOWEVER, if the semihosting function is called when no debugger was ever attached,
-            //   then this trap will still be called. The best course of action, then, is
+            //   then this trap will be called. The best course of action, then, is
             //   to simply return from the trap and let the semihosting function continue to
             //   prevent the CPU from hanging in the trap handler. This way, you can test the
             //   firmware that runs on the VexRiscv without debugger attached, but with semihosting
@@ -53,10 +58,9 @@ void trap()
         }
     }
 
-
     // Insert an EBREAK instruction so that the CPU will halt, and a connected debugger
     // will report the halt to the user.
-    // However, only do this once, because when a debugger isn't connect, you get
+    // However, only do this once, because when a debugger isn't connected, you get
     // an endless cascade of EBREAKs which will ultimately crash the stack.
     if (!trap_induced_ebreak){
         trap_induced_ebreak = 1;
