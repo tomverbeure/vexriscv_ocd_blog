@@ -64,13 +64,18 @@ static inline int __attribute__ ((always_inline)) call_host(int reason, void* ar
 void sh_write0(const char* buf)
 {
     // send string
-    call_host (SEMIHOSTING_SYS_WRITE0, (void*) buf);
+    call_host(SEMIHOSTING_SYS_WRITE0, (void*) buf);
 }
 
 void sh_writec(char c)
 {
     // send string
-    call_host (SEMIHOSTING_SYS_WRITEC, (void*)&c);
+    call_host(SEMIHOSTING_SYS_WRITEC, (void*)&c);
+}
+
+char sh_readc(void)
+{
+    return call_host(SEMIHOSTING_SYS_READC, (void*)NULL);
 }
 
 void _putchar(char character)
@@ -95,6 +100,11 @@ int putchar(int c)
 {
     sh_writec((char)c);
     return c;
+}
+
+int getchar(void)
+{
+    return (int)sh_readc();
 }
 
 int fopen(const char *pathname, const char *mode)

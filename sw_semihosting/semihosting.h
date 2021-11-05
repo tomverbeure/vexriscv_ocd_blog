@@ -5,5 +5,8 @@
 
 void sh_write0(const char* buf);
 void sh_writec(char c);
+char sh_readc(void);
+
+int getchar(void);
 
 #endif

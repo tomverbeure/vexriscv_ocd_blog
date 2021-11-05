@@ -1,0 +1,194 @@
+[*]
+[*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
+[*] Thu Nov  4 00:12:44 2021
+[*]
+[dumpfile] "/home/tom/projects/vexriscv_ocd_blog/tb_ocd/obj_dir/top.fst"
+[dumpfile_mtime] "Tue Nov  2 19:11:07 2021"
+[dumpfile_size] 94097194
+[savefile] "/home/tom/projects/vexriscv_ocd_blog/tb_ocd/waves.gtkw"
+[timestart] 27034136000
+[size] 2690 1618
+[pos] 95 45
+*-19.547539 27036580000 59049060 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] TOP.
+[treeopen] TOP.top.
+[treeopen] TOP.top.u_vex.
+[sst_width] 412
+[signals_width] 462
+[sst_expanded] 1
+[sst_vpaned_height] 1060
+@28
+TOP.clk
+@200
+-
+@28
+TOP.button
+@200
+-
+@28
+TOP.led0
+TOP.led1
+TOP.led2
+@200
+-
+@28
+TOP.jtag_tck
+TOP.jtag_tms
+TOP.jtag_tdi
+TOP.jtag_tdo
+@200
+-
+@28
+[color] 2
+TOP.top.u_vex.systemDebugger_1.io_mem_cmd_valid
+[color] 2
+TOP.top.u_vex.systemDebugger_1.io_mem_cmd_ready
+[color] 2
+TOP.top.u_vex.systemDebugger_1.io_mem_cmd_payload_wr
+@22
+[color] 2
+TOP.top.u_vex.systemDebugger_1.io_mem_cmd_payload_address[31:0]
+[color] 2
+TOP.top.u_vex.systemDebugger_1.io_mem_cmd_payload_data[31:0]
+@28
+[color] 2
+TOP.top.u_vex.systemDebugger_1.io_mem_cmd_payload_size[1:0]
+@200
+-
+@28
+[color] 2
+TOP.top.u_vex.systemDebugger_1.io_mem_rsp_valid
+@22
+[color] 2
+TOP.top.u_vex.systemDebugger_1.io_mem_rsp_payload[31:0]
+@200
+-
+@28
+TOP.top.reset_cpu
+TOP.top.reqCpuReset
+@200
+-
+@28
+TOP.top.u_vex.cpu.reset
+@200
+-
+@28
+[color] 5
+TOP.top.iBus_cmd_valid
+@22
+[color] 5
+TOP.top.iBus_cmd_payload_pc[31:0]
+@8022
+[color] 5
+TOP.top.iBus_cmd_payload_pc[31:0]
+@20000
+-
+-
+@200
+-
+@28
+[color] 5
+TOP.top.iBus_rsp_valid
+@22
+[color] 5
+TOP.top.iBus_rsp_payload_inst[31:0]
+@200
+-
+@28
+[color] 1
+TOP.top.dBus_cmd_valid
+[color] 1
+TOP.top.dBus_cmd_ready
+[color] 1
+TOP.top.dBus_cmd_payload_wr
+@22
+[color] 1
+TOP.top.dBus_cmd_payload_address[31:0]
+@23
+[color] 1
+TOP.top.dBus_be[3:0]
+@28
+[color] 1
+TOP.top.dBus_cmd_payload_size[1:0]
+@22
+[color] 1
+TOP.top.dBus_wdata[31:0]
+@200
+-
+@28
+[color] 1
+TOP.top.dBus_rsp_ready
+@22
+[color] 1
+TOP.top.dBus_rsp_data[31:0]
+@200
+-
+@28
+TOP.top.led_access
+TOP.top.status_access
+@200
+-
+@28
+TOP.top.u_vex.cpu.DebugPlugin_allowEBreak
+TOP.top.u_vex.cpu.DebugPlugin_debugUsed
+TOP.top.u_vex.cpu.DebugPlugin_disableEbreak
+TOP.top.u_vex.cpu.DebugPlugin_firstCycle
+TOP.top.u_vex.cpu.DebugPlugin_godmode
+TOP.top.u_vex.cpu.DebugPlugin_haltIt
+TOP.top.u_vex.cpu.DebugPlugin_haltedByBreak
+TOP.top.u_vex.cpu.DebugPlugin_isPipBusy
+TOP.top.u_vex.cpu.DebugPlugin_resetIt
+TOP.top.u_vex.cpu.DebugPlugin_resetIt_regNext
+TOP.top.u_vex.cpu.DebugPlugin_secondCycle
+TOP.top.u_vex.cpu.DebugPlugin_stepIt
+@22
+TOP.top.u_vex.cpu.DebugPlugin_busReadDataReg[31:0]
+@200
+-
+@22
+TOP.top.u_vex.cpu.CsrPlugin_jumpInterface_payload[31:0]
+@28
+TOP.top.u_vex.cpu.CsrPlugin_jumpInterface_valid
+@200
+-
+@28
+TOP.top.u_vex.cpu.BranchPlugin_jumpInterface_valid
+@22
+TOP.top.u_vex.cpu.BranchPlugin_jumpInterface_payload[31:0]
+@200
+-
+@22
+TOP.top.u_vex.cpu.RegFilePlugin_regFile[0][31:0]
+TOP.top.u_vex.cpu.RegFilePlugin_regFile[1][31:0]
+TOP.top.u_vex.cpu.RegFilePlugin_regFile[2][31:0]
+TOP.top.u_vex.cpu.RegFilePlugin_regFile[3][31:0]
+TOP.top.u_vex.cpu.RegFilePlugin_regFile[4][31:0]
+TOP.top.u_vex.cpu.RegFilePlugin_regFile[5][31:0]
+TOP.top.u_vex.cpu.RegFilePlugin_regFile[6][31:0]
+TOP.top.u_vex.cpu.RegFilePlugin_regFile[7][31:0]
+TOP.top.u_vex.cpu.RegFilePlugin_regFile[8][31:0]
+TOP.top.u_vex.cpu.RegFilePlugin_regFile[9][31:0]
+TOP.top.u_vex.cpu.RegFilePlugin_regFile[10][31:0]
+TOP.top.u_vex.cpu.RegFilePlugin_regFile[11][31:0]
+TOP.top.u_vex.cpu.RegFilePlugin_regFile[12][31:0]
+TOP.top.u_vex.cpu.RegFilePlugin_regFile[13][31:0]
+TOP.top.u_vex.cpu.RegFilePlugin_regFile[14][31:0]
+TOP.top.u_vex.cpu.RegFilePlugin_regFile[15][31:0]
+TOP.top.u_vex.cpu.RegFilePlugin_regFile[16][31:0]
+TOP.top.u_vex.cpu.RegFilePlugin_regFile[17][31:0]
+TOP.top.u_vex.cpu.RegFilePlugin_regFile[18][31:0]
+TOP.top.u_vex.cpu.RegFilePlugin_regFile[19][31:0]
+TOP.top.u_vex.cpu.RegFilePlugin_regFile[20][31:0]
+TOP.top.u_vex.cpu.RegFilePlugin_regFile[21][31:0]
+TOP.top.u_vex.cpu.RegFilePlugin_regFile[22][31:0]
+TOP.top.u_vex.cpu.RegFilePlugin_regFile[23][31:0]
+TOP.top.u_vex.cpu.RegFilePlugin_regFile[24][31:0]
+TOP.top.u_vex.cpu.RegFilePlugin_regFile[25][31:0]
+TOP.top.u_vex.cpu.RegFilePlugin_regFile[26][31:0]
+TOP.top.u_vex.cpu.RegFilePlugin_regFile[27][31:0]
+TOP.top.u_vex.cpu.RegFilePlugin_regFile[28][31:0]
+TOP.top.u_vex.cpu.RegFilePlugin_regFile[29][31:0]
+TOP.top.u_vex.cpu.RegFilePlugin_regFile[30][31:0]
+TOP.top.u_vex.cpu.RegFilePlugin_regFile[31][31:0]
+[pattern_trace] 1
+[pattern_trace] 0

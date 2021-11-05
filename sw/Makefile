@@ -74,6 +74,11 @@ ocd_only:
 		-c "adapter speed 1000; transport select jtag" \
 		-f "vexriscv_init.cfg"
 
+ocd_only_sim:
+	$(OPENOCD_DIR)/bin/openocd \
+		-c "adapter driver jtag_tcp; adapter speed 1000; transport select jtag" \
+		-f "vexriscv_init.cfg"
+
 gdb_only:
 	$(TARGET)-gdb -q \
 		progmem.elf \

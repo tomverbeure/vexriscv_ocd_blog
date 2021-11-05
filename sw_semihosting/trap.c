@@ -11,8 +11,8 @@ int exception_addr;
 int exception_instr;
 int exception_cause;
 
-#define EBREAK_OPCODE   0x001000073
-#define EBREAK_MCAUSE   0x000000003
+#define EBREAK_OPCODE   0x00100073
+#define EBREAK_MCAUSE   0x00000003
 
 // This should not be called by anything unless something goes very bad...
 void trap()

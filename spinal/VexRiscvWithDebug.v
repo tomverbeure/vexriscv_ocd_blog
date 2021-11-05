@@ -1,6 +1,6 @@
 // Generator : SpinalHDL v1.5.0    git head : 83a031922866b078c411ec5529e00f1b6e79f8e7
 // Component : VexRiscvWithDebug
-// Git hash  : 80901f6917a17811b4d3c307eca93d05655ab760
+// Git hash  : 21cc1e746262f4efe27725bad53976cccf6fbad4
 
 
 `define BranchCtrlEnum_defaultEncoding_type [1:0]
@@ -83,6 +83,7 @@ module VexRiscvWithDebug (
   input               io_jtag_tdi,
   output              io_jtag_tdo,
   input               io_jtag_tck,
+  output              io_reqCpuReset,
   input               clk,
   input               reset
 );
@@ -187,6 +188,7 @@ module VexRiscvWithDebug (
   assign io_dBus_cmd_payload_size = cpu_dBus_cmd_payload_size;
   assign cpu_debug_bus_cmd_payload_address = systemDebugger_1_io_mem_cmd_payload_address[7:0];
   assign io_jtag_tdo = jtagBridge_1_io_jtag_tdo;
+  assign io_reqCpuReset = cpu_debug_resetOut;
   always @(posedge clk or posedge reset) begin
     if(reset) begin
       _zz_io_mem_rsp_valid <= 1'b0;

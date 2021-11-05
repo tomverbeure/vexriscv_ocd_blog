@@ -35,19 +35,24 @@ module top(
     wire                dBus_rsp_error;
     wire  [31:0]        dBus_rsp_data;
 
+    wire                reqCpuReset;
+
     reg   [7:0]         reset_vec = 8'hff;
-    wire                reset;
+    reg                 reset, reset_cpu;
 
     // 8 clock cycles of active-high reset.
     always @(posedge clk) begin
         reset_vec       <= { reset_vec[6:0], 1'b0 };     
     end
 
-    assign reset = reset_vec[7];
+    always @(posedge clk) begin
+        reset       <= reset_vec[7];
+        reset_cpu   <= reset_vec[7] || reqCpuReset;
+    end
 
     VexRiscvWithDebug u_vex (
             .clk                        (clk),
-            .reset                      (reset),
+            .reset                      (reset_cpu),
 
             .io_iBus_cmd_valid          (iBus_cmd_valid),
             .io_iBus_cmd_ready          (iBus_cmd_ready),
@@ -70,6 +75,8 @@ module top(
 
             .io_timerInterrupt          (1'b0),
             .io_externalInterrupt       (1'b0),
+
+            .io_reqCpuReset             (reqCpuReset),
 
 `ifdef JTAG_ENABLED
             .io_jtag_tck                (jtag_tck),
@@ -185,6 +192,7 @@ module top(
     //============================================================
 
     reg [31:0] periph_rdata;
+    reg led_access, status_access;
 
     always @(posedge clk or posedge reset) begin
         if (reset) begin
@@ -192,38 +200,49 @@ module top(
             led1            <= 1'b1;
             led2            <= 1'b1;
             periph_rdata    <= 32'd0;
+            led_access      <= 1'b0;
+            status_access   <= 1'b0;
         end
-        else if (dBus_cmd_valid && dBus_cmd_payload_address[31]) begin
+        else begin 
+            led_access      <= 1'b0;
+            status_access   <= 1'b0;
 
-            // LED register
-            if (dBus_cmd_payload_address[mem_addr_bits-1:2] == 10'h0) begin
-                if (dBus_cmd_payload_wr) begin
-                    // LEDs are active low...
-                    led0        <= !dBus_wdata[0];
-                    led1        <= !dBus_wdata[1];
-                    led2        <= !dBus_wdata[2];
+            if (dBus_cmd_valid && dBus_cmd_payload_address[31]) begin
+    
+                // LED register
+                if (dBus_cmd_payload_address[mem_addr_bits-1:2] == 10'h0) begin
+                    led_access      <= 1'b1;
+                    if (dBus_cmd_payload_wr) begin
+                        // LEDs are active low...
+                        led0        <= !dBus_wdata[0];
+                        led1        <= !dBus_wdata[1];
+                        led2        <= !dBus_wdata[2];
+    
+                    end
+                    else begin
+                        periph_rdata        <= 'd0;
+                        periph_rdata[0]     <= !led0;
+                        periph_rdata[1]     <= !led1;
+                        periph_rdata[2]     <= !led2;
+                    end
                 end
-                else begin
-                    periph_rdata        <= 'd0;
-                    periph_rdata[0]     <= !led0;
-                    periph_rdata[1]     <= !led1;
-                    periph_rdata[2]     <= !led2;
-                end
-            end
+    
+                // Status register
+                if (dBus_cmd_payload_address[mem_addr_bits-1:2] == 10'h1) begin
+                    status_access   <= 1'b1;
 
-            // Status register
-            if (dBus_cmd_payload_address[mem_addr_bits-1:2] == 10'h1) begin
-                if (!dBus_cmd_payload_wr) begin
-                    periph_rdata[0]     <= button_sync[1];
-
-                    // I don't want to compile different 2 SW version for
-                    // simulation and HW, so this status bit can be used by 
-                    // the SW on which platform it's running.
+                    if (!dBus_cmd_payload_wr) begin
+                        periph_rdata[0]     <= button_sync[1];
+    
+                        // I don't want to compile different 2 SW version for
+                        // simulation and HW, so this status bit can be used by 
+                        // the SW on which platform it's running.
 `ifdef SIMULATION
-                    periph_rdata[1]     <= 1'b1;
+                        periph_rdata[1]     <= 1'b1;
 `else
-                    periph_rdata[1]     <= 1'b0;
+                        periph_rdata[1]     <= 1'b0;
 `endif
+                    end
                 end
             end
         end

@@ -17,6 +17,7 @@ case class VexRiscvWithDebug() extends Component
         val timerInterrupt          = in(Bool)
         val externalInterrupt       = in(Bool)
         val jtag                    = slave(Jtag())
+        val reqCpuReset             = out(Bool)
     }
 
     // Configure a reasonable performance VexRiscv with compressed instructions.
@@ -114,6 +115,7 @@ case class VexRiscvWithDebug() extends Component
                                        }
         case plugin : DebugPlugin   => plugin.debugClockDomain { 
                                             io.jtag               <> plugin.io.bus.fromJtag() 
+                                            io.reqCpuReset        <> plugin.io.resetOut
                                        }
         case _ =>
     }

@@ -24,9 +24,10 @@ int global_cntr = 0;
 
 int main() 
 {
-//    char str[] = "Hello World!\n";
+    REG_WR(LED_CONFIG, 0x07);
+    wait_led_cycle(1000);
+    REG_WR(LED_CONFIG, 0x00);
 
-//    sh_write0(str);
     printf("Hello World!\n");
 
     while(1){
@@ -40,6 +41,9 @@ int main()
 
         REG_WR(LED_CONFIG, 0x04);
         wait_led_cycle(wait_time);
+
+        int c = getchar();
+        printf("char: %d", c);
 
         global_cntr++;
     }

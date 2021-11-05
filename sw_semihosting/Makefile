@@ -14,7 +14,11 @@ CC_OPT          = -Os
 
 OBJ_FILES       = start.o main.o lib.o trap.o semihosting.o printf.o
 
-OPENOCD_DIR     ?= /opt/openocd_vex
+#OPENOCD_DIR     ?= /opt/openocd_vex
+#OPENOCD         ?= $(OPENOCD_DIR)/bin/openocd
+
+OPENOCD_DIR     ?= ~/tools/openocd_riscv
+OPENOCD         ?= $(OPENOCD_DIR)/src/openocd
 
 # Downloaded from https://github.com/sifive/freedom-tools/releases
 #TOOLS_PREFIX    = /opt/riscv64-unknown-elf-gcc-10.1.0-2020.08.2-x86_64-linux-ubuntu14/bin
@@ -73,8 +77,15 @@ main.o: top_defines.h
 main.c: top_defines.h
 
 ocd_only:
-	$(OPENOCD_DIR)/bin/openocd -f interface/ftdi/digilent_jtag_smt2.cfg \
+	$(OPENOCD) -f interface/ftdi/digilent_jtag_smt2.cfg \
 		-c "adapter speed 1000; transport select jtag" \
+		-f "vexriscv_init.cfg"
+
+ocd_only_sim:
+	$(OPENOCD) \
+                -d \
+                -l openocd.log \
+		-c "adapter driver jtag_tcp; adapter speed 1000; transport select jtag" \
 		-f "vexriscv_init.cfg"
 
 gdb_only:
