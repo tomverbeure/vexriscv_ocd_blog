@@ -107,9 +107,11 @@ int getchar(void)
     return (int)sh_readc();
 }
 
+#if 0
 int fopen(const char *pathname, const char *mode)
 {
 }
+#endif
 
 
 
