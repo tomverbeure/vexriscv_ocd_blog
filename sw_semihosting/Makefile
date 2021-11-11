@@ -86,12 +86,14 @@ ocd_only_sim:
                 -d \
                 -l openocd.log \
 		-c "adapter driver jtag_tcp; adapter speed 1000; transport select jtag" \
-		-f "vexriscv_init.cfg"
+		-f "vexriscv_init.cfg" \
+		-c "arm semihosting enable"
 
 gdb_only:
 	$(TARGET)-gdb -q \
 		progmem.elf \
-		-ex "target extended-remote localhost:3333"
+		-ex "target extended-remote localhost:3333" \
+		-ex "set remotetimeout unlimited"
 gdb: 
 	OPENOCD_DIR=$(OPENOCD_DIR) $(TARGET)-gdb -q \
 		progmem.elf \
