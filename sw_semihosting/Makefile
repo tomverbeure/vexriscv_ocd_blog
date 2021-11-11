@@ -72,9 +72,7 @@ progmem.elf: $(OBJ_FILES) top_defines.h sections.lds Makefile
 progmem_dis.elf: $(OBJ_FILES) top_defines.h sections.lds Makefile
 	$(LD) $(LDFLAGS) -o $@ $(OBJ_FILES) -lm 
 
-main.o: top_defines.h
-
-main.c: top_defines.h
+$(OBJ_FILES): top_defines.h riscv.h semihosting.h reg.h printf.h printf_config.h lib.h
 
 ocd_only:
 	$(OPENOCD) -f interface/ftdi/digilent_jtag_smt2.cfg \
