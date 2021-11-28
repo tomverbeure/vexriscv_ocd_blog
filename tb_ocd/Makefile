@@ -1,15 +1,21 @@
 DEBUG?=no
-TRACE?=yes
+TRACE_FST?=yes
+TRACE_VCD?=no
 PRINT_PERF?=no
 TRACE_START=0
 ADDCFLAGS += -CFLAGS -pthread -LDFLAGS -pthread
 
 VERILATOR_ARGS += -DSIMULATION -DSEMIHOSTING_SW
 
-ifeq ($(TRACE),yes)
+ifeq ($(TRACE_FST),yes)
 	VERILATOR_ARGS += --trace-fst
-	ADDCFLAGS += -CFLAGS -DTRACE
+	ADDCFLAGS += -CFLAGS -DTRACE_FST
 endif
+ifeq ($(TRACE_VCD),yes)
+	VERILATOR_ARGS += --trace
+	ADDCFLAGS += -CFLAGS -DTRACE_VCD
+endif
+
 ifeq ($(DEBUG),yes)
 	ADDCFLAGS += -CFLAGS "-g3 -O0"
 endif

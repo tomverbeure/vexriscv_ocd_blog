@@ -2,6 +2,7 @@
 #include "Vtop_top.h"
 #include "verilated.h"
 #include "verilated_fst_c.h"
+#include "verilated_vcd_c.h"
 
 #include "./common/framework.h"
 #include "./common/jtag.h"

@@ -139,8 +139,11 @@ public:
 	uint64_t allowedTime = 0;
 	string name;
 	uint64_t time = 0;
-	#ifdef TRACE
+	#ifdef TRACE_FST
 	VerilatedFstC* tfp;
+	#endif
+	#ifdef TRACE_VCD
+	VerilatedVcdC* tfp;
 	#endif
 
 	ofstream logTraces;
@@ -153,7 +156,7 @@ public:
 
 	virtual ~Workspace(){
 		delete top;
-		#ifdef TRACE
+		#if defined(TRACE_FST) || defined(TRACE_VCD)
 		delete tfp;
 		#endif
 
@@ -174,7 +177,7 @@ public:
 	virtual void fail(){ throw std::exception();}
 
 	virtual void dump(uint64_t i){
-		#ifdef TRACE
+		#if defined(TRACE_FST) || defined(TRACE_VCD)
 		if(i >= TRACE_START) tfp->dump(i);
 		#endif
 	}
@@ -182,11 +185,16 @@ public:
 	Workspace* run(uint32_t timeout = 5000){
 
 		// init trace dump
-		#ifdef TRACE
 		Verilated::traceEverOn(true);
+		#ifdef TRACE_FST
 		tfp = new VerilatedFstC;
 		top->trace(tfp, 99);
 		tfp->open((string(name)+ ".fst").c_str());
+		#endif
+		#ifdef TRACE_VCD
+		tfp = new VerilatedVcdC;
+		top->trace(tfp, 99);
+		tfp->open((string(name)+ ".vcd").c_str());
 		#endif
 
 		struct timespec start_time,tick_time;
@@ -249,7 +257,7 @@ public:
 
 					flushCounter++;
 					if(flushCounter > 100000){
-						#ifdef TRACE
+						#if defined(TRACE_FST) || defined(TRACE_VCD)
 						tfp->flush();
 						//printf("flush\n");
 						#endif
@@ -273,7 +281,7 @@ public:
 
 		dump(time);
 		dump(time+10);
-		#ifdef TRACE
+		#if defined(TRACE_FST) || defined(TRACE_VCD)
 		tfp->close();
 		#endif
 		return this;
