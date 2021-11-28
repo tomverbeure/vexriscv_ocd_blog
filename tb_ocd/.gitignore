@@ -1,0 +1,3 @@
+*.fst*
+obj_dir/
+top.logTrace

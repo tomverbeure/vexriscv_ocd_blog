@@ -4,7 +4,7 @@ PRINT_PERF?=no
 TRACE_START=0
 ADDCFLAGS += -CFLAGS -pthread -LDFLAGS -pthread
 
-VERILATOR_ARGS += -DSIMULATION
+VERILATOR_ARGS += -DSIMULATION -DSEMIHOSTING_SW
 
 ifeq ($(TRACE),yes)
 	VERILATOR_ARGS += --trace-fst
@@ -22,10 +22,13 @@ endif
 
 ADDCFLAGS += -CFLAGS -DTRACE_START=${TRACE_START}
 
-all: clean compile
+all: clean compile 
 
-run: compile
+run: 
 	./obj_dir/Vtop
+
+waves:
+	gtkwave top.fst waves.gtkw
 
 verilate: ../rtl/top.v ../spinal/VexRiscvWithDebug.v
 	verilator -I../../../.. -cc  $^ -CFLAGS -std=c++11  ${ADDCFLAGS} --gdbbt ${VERILATOR_ARGS} -Wno-WIDTH -Wno-UNOPTFLAT --x-assign unique --exe src/main.cpp
@@ -35,4 +38,6 @@ compile: verilate
  	
 clean:
 	rm -rf obj_dir
+
+
  	
