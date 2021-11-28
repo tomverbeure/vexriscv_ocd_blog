@@ -28,8 +28,6 @@ endif
 
 ADDCFLAGS += -CFLAGS -DTRACE_START=${TRACE_START}
 
-
-
 all: clean compile 
 
 run: 

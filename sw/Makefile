@@ -17,9 +17,13 @@ OBJ_FILES       = start.o main.o lib.o trap.o
 OPENOCD_DIR     ?= /opt/openocd_vex
 
 # Downloaded from https://github.com/sifive/freedom-tools/releases
-#TOOLS_PREFIX    = /opt/riscv64-unknown-elf-gcc-10.1.0-2020.08.2-x86_64-linux-ubuntu14/bin
-TOOLS_PREFIX    = /opt/riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14/bin
-#TOOLS_PREFIX    = /opt/riscv64-unknown-elf-gcc-10.1.0-2020.08.2-x86_64-apple-darwin/bin
+UNAME_S         = $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+    TOOLS_PREFIX    = /opt/riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14/bin
+endif
+ifeq ($(UNAME_S),Darwin)
+    TOOLS_PREFIX    = /opt/riscv64-unknown-elf-gcc-10.1.0-2020.08.2-x86_64-apple-darwin/bin
+endif
 
 TARGET          = $(TOOLS_PREFIX)/riscv64-unknown-elf
 
