@@ -22,12 +22,10 @@ endif
 
 ADDCFLAGS += -CFLAGS -DTRACE_START=${TRACE_START}
 
-
-
 all: clean compile
 
 run: compile
-	./obj_dir
+	./obj_dir/Vtop
 
 verilate: ../rtl/top.v ../spinal/VexRiscvWithDebug.v
 	verilator -I../../../.. -cc  $^ -CFLAGS -std=c++11  ${ADDCFLAGS} --gdbbt ${VERILATOR_ARGS} -Wno-WIDTH -Wno-UNOPTFLAT --x-assign unique --exe src/main.cpp

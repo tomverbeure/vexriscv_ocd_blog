@@ -173,7 +173,7 @@ public:
 	virtual void pass(){ throw success();}
 	virtual void fail(){ throw std::exception();}
 
-	virtual void dump(uint64_t i){
+	virtual void dump(vluint64_t i){
 		#ifdef TRACE
 		if(i >= TRACE_START) tfp->dump(i);
 		#endif
