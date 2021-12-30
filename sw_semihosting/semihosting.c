@@ -45,6 +45,7 @@ static inline int __attribute__ ((always_inline)) call_host(int reason, void* ar
         // Force 16-byte alignment to make sure that the 3 instruction fall
         // within the same virtual page. If you the instruction straddle a page boundary
         // the debugger fetching the instructions could lead to a page fault.
+        // Note: align 4 means, align by 2 to the power of 4!
         " .align 4 \n"
         " slli x0, x0, 0x1f \n"
         " ebreak \n"
@@ -63,19 +64,25 @@ static inline int __attribute__ ((always_inline)) call_host(int reason, void* ar
 
 void sh_write0(const char* buf)
 {
-    // send string
+    // Print zero-terminated string
     call_host(SEMIHOSTING_SYS_WRITE0, (void*) buf);
 }
 
 void sh_writec(char c)
 {
-    // send string
+    // Print single character
     call_host(SEMIHOSTING_SYS_WRITEC, (void*)&c);
 }
 
 char sh_readc(void)
 {
-    return call_host(SEMIHOSTING_SYS_READC, (void*)NULL);
+    // Read character from keyboard. (Blocking operation!)
+    char c = call_host(SEMIHOSTING_SYS_READC, (void*)NULL);
+
+    if (sh_missing_host)
+        return 0;
+    else
+        return c;
 }
 
 void _putchar(char character)

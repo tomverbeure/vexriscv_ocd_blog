@@ -21,7 +21,7 @@ Sim window:
 
 SW window:
 
-* Start OpenOCD: `make ocd_sim_only`
+* Start OpenOCD: `make ocd_only_sim`
 
     Starting OpenOCD results in EBREAKs resulting in a HALT. The first semihosting
     call will halt the CPU. 

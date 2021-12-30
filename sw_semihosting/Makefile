@@ -14,10 +14,8 @@ CC_OPT          = -Os
 
 OBJ_FILES       = start.o main.o lib.o trap.o semihosting.o printf.o
 
-OPENOCD_DIR     ?= ~/tools/openocd_riscv-tvb
-#OPENOCD         ?= $(OPENOCD_DIR)/bin/openocd
-
-OPENOCD         ?= $(OPENOCD_DIR)/src/openocd
+OPENOCD_DIR     ?= /opt/openocd_vex
+OPENOCD         ?= $(OPENOCD_DIR)/bin/openocd
 
 # Downloaded from https://github.com/sifive/freedom-tools/releases
 UNAME_S         = $(shell uname -s)

@@ -9,4 +9,6 @@ char sh_readc(void);
 
 int getchar(void);
 
+extern int sh_missing_host;
+
 #endif
