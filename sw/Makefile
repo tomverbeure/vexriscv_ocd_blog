@@ -15,6 +15,7 @@ CC_OPT          = -Os
 OBJ_FILES       = start.o main.o lib.o trap.o
 
 OPENOCD_DIR     ?= /opt/openocd_vex
+OPENOCD         ?= $(OPENOCD_DIR)/bin/openocd
 
 # Downloaded from https://github.com/sifive/freedom-tools/releases
 UNAME_S         = $(shell uname -s)
@@ -74,12 +75,12 @@ main.o: top_defines.h
 main.c: top_defines.h
 
 ocd_only:
-	$(OPENOCD_DIR)/bin/openocd -f interface/ftdi/digilent_jtag_smt2.cfg \
+	$(OPENOCD) -f interface/ftdi/digilent_jtag_smt2.cfg \
 		-c "adapter speed 1000; transport select jtag" \
 		-f "vexriscv_init.cfg"
 
 ocd_only_sim:
-	$(OPENOCD_DIR)/bin/openocd \
+	$(OPENOCD) \
 		-c "adapter driver jtag_tcp; adapter speed 1000; transport select jtag" \
 		-f "vexriscv_init.cfg"
 
