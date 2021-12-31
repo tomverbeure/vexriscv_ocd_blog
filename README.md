@@ -23,8 +23,8 @@ A short summary is:
 * 64-bit RISC-V cycle counter support.
 * trap on EBREAK enabled
 
-    This is not necessary for basic debug support, but it will be useful for semi-hosting
-    support. See later.
+    This is not necessary for basic debug functionality, but it's essential for semihosting
+    support.
 
 **Dual-ported CPU Memory**
 
