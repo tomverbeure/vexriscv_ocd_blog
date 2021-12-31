@@ -36,6 +36,12 @@
 
 static inline int __attribute__ ((always_inline)) call_host(int reason, void* arg) {
 #if 1
+    // This must always be set back to 0 to cover the case where a host wasn't
+    // initially present, but only connected while the program was already up and
+    // running. In that case, trap() suddenly won't be called anymore, so we have to
+    // clear this variable *before* EBREAK is called.
+    sh_missing_host = 0;
+
     register int value asm ("a0") = reason;
     register void* ptr asm ("a1") = arg;
     asm volatile (

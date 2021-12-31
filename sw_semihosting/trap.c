@@ -21,8 +21,6 @@ void trap()
     uint32_t mtval  = csr_read(mtval);      // Instruction value of trap
     uint32_t mcause = csr_read(mcause);     // Reason for the trap
 
-    sh_missing_host = 0;
-
     if (mcause == EBREAK_MCAUSE && mtval == EBREAK_OPCODE){
         // This trap was caused by an EBREAK...
 
