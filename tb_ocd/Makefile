@@ -43,7 +43,7 @@ compile: verilate
 	make -j -C obj_dir/ -f Vtop.mk Vtop
  	
 clean:
-	rm -rf obj_dir
+	rm -rf obj_dir top.fst top.fst.hier top.logTrace
 
 
  	
