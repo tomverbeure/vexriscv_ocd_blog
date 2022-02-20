@@ -5,8 +5,8 @@
 # ./sw/start.S
 # ./rtl/top.v
 
-MEM_WORDS       = 512
-MEM_BYTES       = 2048
+MEM_WORDS       = 1024
+MEM_BYTES       = 4096
 
 MARCH           = rv32ic
 CPU_FREQ_MHZ    = 50

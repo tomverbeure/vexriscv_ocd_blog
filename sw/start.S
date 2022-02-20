@@ -83,7 +83,7 @@ _trap:
 
 _start_continue:
 	/* set stack pointer */
-	li sp,2048
+	li sp,4096
 
 	/* jump to main C code */
 	jal ra,main
