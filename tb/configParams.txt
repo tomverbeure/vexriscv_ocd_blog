@@ -1,0 +1,22 @@
+# Configuration parameter for GDBWave.
+# You can ignore this file if you don't use GDBWave.
+cpuClk             = tb.u_top.u_vex.cpu.clk
+
+retiredPc          = tb.u_top.u_vex.cpu.lastStagePc [31:0]
+retiredPcValid     = tb.u_top.u_vex.cpu.lastStageIsValid
+
+regFileWriteValid  = tb.u_top.u_vex.cpu.lastStageRegFileWrite_valid
+regFileWriteAddr   = tb.u_top.u_vex.cpu.lastStageRegFileWrite_payload_address [4:0]
+regFileWriteData   = tb.u_top.u_vex.cpu.lastStageRegFileWrite_payload_data [31:0]
+
+memCmdValid        = tb.u_top.dBus_cmd_valid
+memCmdReady        = tb.u_top.dBus_cmd_ready
+memCmdAddr         = tb.u_top.dBus_cmd_payload_address [31:0]
+memCmdSize         = tb.u_top.dBus_cmd_payload_size [1:0]
+memCmdWr           = tb.u_top.dBus_cmd_payload_wr
+memCmdWrData       = tb.u_top.dBus_cmd_payload_data [31:0]
+memRspValid        = tb.u_top.dBus_rsp_ready
+memRspRdData       = tb.u_top.dBus_rsp_data [31:0]
+
+memInitFile        = ../sw/progmem.bin
+memInitStartAddr   = 0

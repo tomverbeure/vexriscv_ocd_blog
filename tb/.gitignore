@@ -1,2 +1,4 @@
 *.vcd
+*.fst
 tb
+gdbwave.log

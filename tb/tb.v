@@ -13,7 +13,10 @@ module tb;
     end
 
     initial begin
-        $dumpfile("waves.vcd");
+        if ($test$plusargs("fst"))
+            $dumpfile("waves.fst");
+        else
+            $dumpfile("waves.vcd");
         $dumpvars();
         repeat(1000) @(posedge clk);
         $finish;
