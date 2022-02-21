@@ -3,6 +3,7 @@ TRACE_FST   ?= no
 
 VERILOG_FILES 	= tb.v ../rtl/top.v ../spinal/VexRiscvWithDebug.v
 SW_FILES 		= ../sw/progmem0.hex ../sw/progmem1.hex ../sw/progmem2.hex ../sw/progmem3.hex
+GDBWAVE 		= ~/projects/gdbwave/src/gdbwave
 
 ifeq ($(TRACE_FST),yes)
     # -fst tells iverilog/VVP to dump waveforms in FST format.
@@ -29,7 +30,7 @@ $(SW_FILES):
 
 # Run gdbwave
 gdbwave: 
-	~/projects/gdbwave/src/gdbwave -w waves.fst -c ./configParams.txt
+	$(GDBWAVE) -w waves.fst -c ./configParams.txt
 
 clean:
 	\rm -fr *.vcd ./tb *.fst *.fst.hier

@@ -101,7 +101,7 @@ There's also a testbench in the `./tb_ocd` directory. The goal of this testbench
 with Verilator (MUCH faster!) but also to link the simulator with OpenOCD. This way, you can connect
 GDB to the simulator as if you're connected to a real piece of hardware.
 
-Since we're simulating a VexRiscv, you need to isntall the VexRiscv version of OpenOCD. You can find
+Since we're simulating a VexRiscv, you need to install the VexRiscv version of OpenOCD. You can find
 it [here](https://github.com/SpinalHDL/openocd_riscv).
 
 The Verilator testbench uses the `sw_semihosting` firmware.
